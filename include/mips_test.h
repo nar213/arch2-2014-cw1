@@ -96,7 +96,7 @@ extern "C"{
     As you add tests, you will notice a lot of repetition,
     between different tests of one instruction, and the testing
     of different instructions. As a programmer, whenever you
-    see repetition you should thing about automation. This
+    see repetition you should think about automation. This
     is a programmatic framework, so how much replicated
     functionality can be wrapped up inside a function?
     
@@ -130,7 +130,6 @@ int mips_test_begin_test(const char *instruction);
     \param passed Flag to indicate if the test succeeded (passed!=0) or failed (passed==0).
     
     \param msg An optional message to explain what you the test was looking for in
-        case it failed. Can be NULL if there is nothing useful to print, or you don't want to
         write a message.
 */
 void mips_test_end_test(int testId, int passed, const char *msg);

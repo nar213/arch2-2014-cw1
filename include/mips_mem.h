@@ -8,7 +8,7 @@
     integers. For the moment we will only deal with one address space,
     but later on we'll see others. In this API, abstract memory spaces
     are accessed using the functions in \ref mips_mem_core, but they
-    must be intially created using a device specific API from \ref mips_mem_devices.
+    must be initially created using a device specific API from \ref mips_mem_devices.
     
     RAM is a particular kind of memory device, which maps reads and
     writes transactions at particular addresses to corresponding
@@ -24,8 +24,8 @@
 
 /* This allows the header to be used from both C and C++, so
 programs can be written in either (or both) languages. */
-#ifdef __cplusplus
-extern "C"{
+#ifdef __cplusplus // This instruction forces the compiler to make the compilation C friendly for straightforward reasons
+extern "C"{ //
 #endif
     
 /*! \defgroup mips_mem Memory
@@ -44,7 +44,7 @@ anything about how it is represented. See \ref mips_mem_h.
 */
 struct mips_mem_provider;
 
-/*! An opaque handle to a memory space.
+/*! An opaque handle to a memory space. // A HANDLE IS AN OBSCURE REFERENCE TO A PLACE IN MEMORY
 
     We can pass this around without knowing who or what provides the
     memory. This is an example of an "opaque data type" http://en.wikipedia.org/wiki/Opaque_data_type
@@ -69,7 +69,7 @@ struct mips_mem_provider;
     tell whether or not a handle is currently pointing at a
     data-structure.
 */
-typedef struct mips_mem_provider *mips_mem_h;
+typedef struct mips_mem_provider *mips_mem_h; //struct mips_mem_provider able to be written as *mips_mem_h
 
 
 /*! Perform a read transaction on the memory
@@ -103,7 +103,7 @@ mips_error mips_mem_write(
     really know what is being released (it could be memory, it could
     be file handles), and shouldn't care. Calling mips_mem_free on an
     empty (zero) handle is legal. Calling mips_mem_free twice on the
-    same non-empty handle is illegal, and the resulting behaviour is undefined
+    same handle is illegal, and the resulting behaviour is undefined
     (most likely a crash).
     
     A pattern that can be useful is:

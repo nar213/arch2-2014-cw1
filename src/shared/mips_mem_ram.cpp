@@ -3,6 +3,8 @@
    linked against something which needs an implementation
    of a RAM device following that memory mapping
    interface.
+
+   MORE ABOUT ALLOCATING THINGS THAN TESTING FOR ERRORS
 */
 #include "mips_mem.h"
 
@@ -23,17 +25,17 @@ extern "C" mips_mem_h mips_mem_create_ram(
 	uint8_t *data=(uint8_t*)malloc(cbMem);
 	if(data==0)
 		return 0;
-	
+
 	struct mips_mem_provider *mem=(struct mips_mem_provider*)malloc(sizeof(struct mips_mem_provider));
 	if(mem==0){
 		free(data);
 		return 0;
 	}
-	
+
 	mem->length=cbMem;
 	mem->blockSize=blockSize;
 	mem->data=data;
-	
+
 	return mem;
 }
 
@@ -44,10 +46,10 @@ static mips_error mips_mem_read_write(
     uint32_t length,
     uint8_t *dataOut
 )
-{	
+{
 	if(mem==0)
 		return mips_ErrorInvalidHandle;
-	
+
 	if(0 != (address%mem->blockSize) ){
 		return mips_ExceptionInvalidAlignment;
 	}
@@ -57,7 +59,7 @@ static mips_error mips_mem_read_write(
 	if((address+length) > mem->length){	// A subtle bug here, maybe?
 		return mips_ExceptionInvalidAddress;
 	}
-	
+
 	if(write){
 		for(unsigned i=0; i<length; i++){
 			mem->data[address+i]=dataOut[i];
@@ -76,7 +78,7 @@ mips_error mips_mem_read(
     uint32_t length,	//!< Number of bytes to transfer
     uint8_t *dataOut	//!< Receives the target bytes
 )
-{	
+{
 	return mips_mem_read_write(
 		false,	// we want to read
 		mem,
